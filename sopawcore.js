@@ -105,12 +105,12 @@ class φ {
 				
 				for (let _t of entry.querySelectorAll ("tag")) _tags.push (_t.innerHTML);
 				
-				φ.entries.push ({
+				φ.entries.push (new φ ({
 					title: _name,
 					searchkey: _key,
 					description: _desc,
 					tags: _tags
-				});
+				}));
 			}
 		}
 		xhr.send ();
