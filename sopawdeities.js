@@ -2,8 +2,8 @@ var _ = {
 	"searchentries": [
 		{
 			"title": "Aphrodite",
-			"key": "aphrodite"
-			"description": "A deity from hellenism that rules over the domain of love, beauty, physical attraction, and sexuality."
+			"key": "aphrodite",
+			"description": "A deity from hellenism that rules over the domain of love, beauty, physical attraction, and sexuality.",
 			"tags": [ "Deity", "Hellenism" ]
 		}
 	]
