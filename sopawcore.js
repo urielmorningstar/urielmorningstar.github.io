@@ -26,20 +26,20 @@ class ε {
 		else return target.querySelector (sel) || null;
 	}
 	
-	static Attr (elm, attribute, defaultValue = null) {
-		return elm.getAttribute (attribute) || defaultValue;
+	static attr (elm, attribute, defaultValue = null) {
+		return elm.getattribute (attribute) || defaultValue;
 	}
 	
-	static Set (elm, attribute, val) {
-		elm.setAttribute (attribute, val);
+	static set (elm, attribute, val) {
+		elm.setattribute (attribute, val);
 	}
 	
-	static Mark (elm, attribute) {
-		elm.setAttribute (attribute, "");
+	static mark (elm, attribute) {
+		elm.setattribute (attribute, "");
 	}
 	
-	static Rem (elm, attribute) {
-		elm.removeAttribute (attribute);
+	static rem (elm, attribute) {
+		elm.removeattribute (attribute);
 	}
 	
 	constructor (tag) {
@@ -69,12 +69,12 @@ class ε {
 	}
 	
 	attr (attribute, value = "") {
-		ε.Set (this.element, attribute, value);
+		ε.set (this.element, attribute, value);
 		return this;
 	}
 	
 	mark (markname) {
-		ε.Mark (this.element, markname);
+		ε.mark (this.element, markname);
 		return this;
 	}
 	
@@ -133,7 +133,7 @@ class φ {
 	}
 }
 
-let databases = ε.Attr (document.currentScript, "databases", "").split (" ");
+let databases = ε.attr (document.currentScript, "databases", "").split (" ");
 let unloaded = [...databases];
 
 let head = document.querySelector ("head");
