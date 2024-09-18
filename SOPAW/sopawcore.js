@@ -100,6 +100,17 @@ class φ {
 		φ.entries.sort ((a, b) =>
 			a.title.toLowerCase ().localeCompare (b.title.toLowerCase ()));
 		for (var entry of φ.entries) entry.createElement ();
+
+		Σ.searchBar = new ε("input")
+			.id ("searchkey")
+			.attr ("type", "text")
+			.attr ("placeholder", "Search...")
+			.event ("change", Σ.searchFromBar)
+			.event ("keydown", Σ.searchFromBar)
+			.event ("beforeinput", Σ.searchFromBar)
+			.event ("input", Σ.searchFromBar)
+			.event ("paste", Σ.searchFromBar)
+			.add ();
 	}
 	
 	constructor (entryData = {}) {
@@ -143,6 +154,24 @@ class φ {
 		.content (this.description)
 		.add (elmM);
 	}
+}
+
+class Σ {
+	static RX_TAG = /#([^#"\s]+)/g;
+	static RX_DESC = /"([^"]+)"/g;
+
+	static searchBar;
+	static searchFromBar () { Σ.search (Σ.searchBar.value); }
+
+	static search (query) {
+		let tagSearches = [];
+		let descSearches = [];
+		let keySearch = "";
+
+		console.log ([...query.matchAll (Σ.RX_TAG)]);
+		console.log ([...query.matchAll (Σ.RX_DESC)]);
+	}
+
 }
 
 let databases = ε.attr (document.currentScript, "databases", "").split (" ");
