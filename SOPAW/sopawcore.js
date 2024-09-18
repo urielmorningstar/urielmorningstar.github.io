@@ -225,8 +225,11 @@ class Σ {
 			else ε.rem (entryElm, "visible");
 		}
 
-		// console.log (keySearch);
-		if (updateSearchbar) Σ.searchBar.value = query;
+		let rcq = [query];
+		rcq.push (...(tagSearches.map ((val) => "#" + val)));
+		rcq.push (...(descSearches.map ((val) => '"' + val + '"')));
+
+		if (updateSearchbar) Σ.searchBar.value = rcq.join (" ");
 	}
 
 }
