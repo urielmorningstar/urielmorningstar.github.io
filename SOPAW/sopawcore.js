@@ -93,13 +93,9 @@ class ε {
 
 class φ {
 	static entries = [];
-
-	static pushEntry (entryData = {}) {
-		φ.entries.push (new φ (entryData));
-	}
 	
 	static loadEntries () {
-		for (var entry of ENTRY_DUMP) φ.pushEntry (entry);
+		for (var entry of ENTRY_DUMP) new φ (entry);
 	}
 	
 	constructor (entryData = {}) {
