@@ -106,8 +106,8 @@ class φ {
 			.attr ("placeholder", "Search...")
 			.event ("change", Σ.searchFromBar)
 			.event ("keydown", Σ.searchFromBar)
-			.event ("beforeinput", Σ.searchFromBar)
-			.event ("input", Σ.searchFromBar)
+			// .event ("beforeinput", Σ.searchFromBar)
+			// .event ("input", Σ.searchFromBar)
 			.event ("paste", Σ.searchFromBar)
 			.add ();
 
@@ -119,6 +119,7 @@ class φ {
 		this.searchkey = optional (entryData, "key", entryData.title);
 		this.description = optional (entryData, "description", null);
 		this.tags = optional (entryData, "tags", []);
+		this.link = optional (entryData, "link", null);
 		
 		φ.entries.push (this);
 	}
@@ -145,15 +146,42 @@ class φ {
 		let elmH = new ε("h1")
 		.add (elmM);
 		
-		let elmHA = new ε("a")
+		let elmHAbuilder = new ε("a")
 		.attr ("href", "#")
+		.mark ("title-link")
 		.content (this.title)
-		.event ("click", () => { console.log ("A"); })
-		.add (elmH);
+		
+		if (this.link != null) {
+			elmHAbuilder.event ("click", () => {
+				window.open (this.link).focus ();
+			});
+		}
+		
+		let elmHA = elmHAbuilder.add (elmH);
 
-		let elmP = new ε("p")
-		.content (this.description)
-		.add (elmM);
+		if (this.tags.length > 0) {
+			for (var i = 0; i < this.tags.length; i++) {
+				if (i != 0) new ε("span").content(", ").add(elmM);
+				let tag = this.tags [i];
+
+				new ε("a")
+					.content (tag)
+					.attr ("href", "#")
+					.mark ("tag-link")
+					.event ("click", () => {
+						Σ.search ("#" + tag);
+					})
+					.add (elmM);
+			}
+		}
+
+		if (this.description != null) {
+			new ε("hr").add (elmM);
+
+			let elmP = new ε("p")
+			.content (this.description)
+			.add (elmM);
+		}
 	}
 }
 
@@ -163,9 +191,9 @@ class Σ {
 	static RX_WHITESPACE = /\s+/g;
 
 	static searchBar;
-	static searchFromBar () { Σ.search (Σ.searchBar.value); }
+	static searchFromBar () { Σ.search (Σ.searchBar.value, false); }
 
-	static search (query) {
+	static search (query, updateSearchbar = true) {
 		let tagSearches = [];
 		let descSearches = [];
 		let keySearch = "";
