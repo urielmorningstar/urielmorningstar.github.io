@@ -1,5 +1,5 @@
 
-// Object Manipulation (Utils)
+// Object + Array Manipulation (Utils)
 
 function optional (obj, key, defaultValue = null) {
 	return obj[key] || null;
@@ -8,6 +8,14 @@ function optional (obj, key, defaultValue = null) {
 function predicate (obj, key, callback, defaultValue = null) {
 	if (key in obj) return callback (obj[key]);
 	else return defaultValue;
+}
+
+function removeItem (arr, val) {
+	while (true) {
+		let index = arr.indexOf (val);
+		if (index === -1) break;
+		else arr.splice (index, 1);
+	}
 }
 
 // Element Manipulation (Utils)
@@ -90,36 +98,8 @@ class φ {
 		φ.entries.push (new φ (entryData));
 	}
 	
-	static loadEntries (url) {
-		// let xhr = new XMLHttpRequest ();
-		// xhr.open ("GET", url);
-		// xhr.setRequestHeader ("Cache-control", "no-cache, no-store, max-age=0");
-		// xhr.setRequestHeader ("Expires", "Tue, 01 Jan 1980 1:00:00 GMT");
-		// xhr.setRequestHeader ("Pragma", "no-cache");
-		// xhr.onload = function (data) {
-		// 	let respTxt = data.target.response;
-		// 	let xml = new DOMParser ().parseFromString (respTxt, "text/xml");
-			
-		// 	console.log (xml);
-			
-		// 	for (let entry of xml.querySelectorAll ("entry")) {
-		// 		let _name = ε.Attr (entry, "name");
-		// 		let _key = ε.Attr (entry, "key", _name.toLowerCase ());
-		// 		let _desc = entry.querySelector ("description").innerHTML;
-		// 		let _tags = [];
-				
-		// 		for (let _t of entry.querySelectorAll ("tag")) _tags.push (_t.innerHTML);
-				
-		// 		φ.pushEntry ({
-		// 			title: _name,
-		// 			searchkey: _key,
-		// 			description: _desc,
-		// 			tags: _tags
-		// 		});
-		// 	}
-		// }
-		// xhr.send ();
-
+	static loadEntries () {
+		for (var entry of ENTRY_DUMP) φ.pushEntry (entry);
 	}
 	
 	constructor (entryData = {}) {
@@ -154,7 +134,7 @@ class φ {
 }
 
 let databases = ε.Attr (document.currentScript, "databases", "").split (" ");
-let loaded = databases.map ((val) => false);
+let unloaded = [...databases];
 
 let head = document.querySelector ("head");
 for (var db of databases) {
@@ -162,9 +142,12 @@ for (var db of databases) {
 
 	let dbScript = new ε("script")
 					.attr ("src", dbURL)
+					.attr ("database-name", db)
 					.mark ("database-script")
 					.event ("load", (evt) => {
-						console.log (evt.target);
+						let dbName = ε.attr (evt.target, "database-name");
+						removeItem (unloaded, dbName);
+						if (unloaded.length == 0) φ.loadEntries ();
 					})
 					.add (head);
 }
