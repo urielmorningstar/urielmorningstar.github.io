@@ -77,6 +77,7 @@ class ε {
 	
 	event (evt, callback) {
 		this ["on" + evt] = callback;
+		return this;
 	}
 }
 
