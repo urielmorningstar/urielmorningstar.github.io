@@ -18,19 +18,19 @@ class ε {
 		else return target.querySelector (sel) || null;
 	}
 	
-	static attr (elm, attribute, defaultValue = null) {
+	static Attr (elm, attribute, defaultValue = null) {
 		return elm.getAttribute (attribute) || defaultValue;
 	}
 	
-	static set (elm, attribute, val) {
+	static Set (elm, attribute, val) {
 		elm.setAttribute (attribute, val);
 	}
 	
-	static mark (elm, attrbiute) {
+	static Mark (elm, attrbiute) {
 		elm.setAttribute (attribute, "");
 	}
 	
-	static rem (elm, attribute) {
+	static Rem (elm, attribute) {
 		elm.removeAttribute (attribute);
 	}
 	
@@ -61,12 +61,12 @@ class ε {
 	}
 	
 	attr (attribute, value = "") {
-		ε.set (this.element, attribute, value);
+		ε.Set (this.element, attribute, value);
 		return this;
 	}
 	
 	mark (markname) {
-		ε.mark (this.element, markname);
+		ε.Mark (this.element, markname);
 		return this;
 	}
 	
@@ -102,8 +102,8 @@ class φ {
 		// 	console.log (xml);
 			
 		// 	for (let entry of xml.querySelectorAll ("entry")) {
-		// 		let _name = ε.attr (entry, "name");
-		// 		let _key = ε.attr (entry, "key", _name.toLowerCase ());
+		// 		let _name = ε.Attr (entry, "name");
+		// 		let _key = ε.Attr (entry, "key", _name.toLowerCase ());
 		// 		let _desc = entry.querySelector ("description").innerHTML;
 		// 		let _tags = [];
 				
@@ -152,7 +152,7 @@ class φ {
 	}
 }
 
-let databases = ε.attr (document.currentScript, "databases", "").split (" ");
+let databases = ε.Attr (document.currentScript, "databases", "").split (" ");
 let loaded = databases.map ((val) => false);
 
 let head = document.querySelector ("head");
