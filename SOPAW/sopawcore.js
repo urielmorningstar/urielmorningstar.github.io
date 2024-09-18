@@ -215,8 +215,8 @@ class Σ {
 			console.log (descSearches.map ((val) => entryDesc.includes (val)));
 
 			if (!entryKey.includes (keySearch)) flag = false;
-			if (tagSearches.map ((val) => entryTags.includes (val)).includes (false)) flag = false;
-			if (descSearches.map ((val) => entryDesc.includes (val)).includes (false)) flag = false;
+			if (!tagSearches.map ((val) => entryTags.includes (val)).includes (true)) flag = false;
+			if (!descSearches.map ((val) => entryDesc.includes (val)).includes (true)) flag = false;
 
 			if (flag) ε.mark (entryElm, "visible");
 			else ε.rem (entryElm, "visible");
