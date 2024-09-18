@@ -200,10 +200,13 @@ class Σ {
 		query = query.replaceAll (Σ.RX_DESC, "");
 		let keySearch = query.replaceAll (Σ.RX_WHITESPACE, " ");
 
+		console.log (tagSearches, descSearches, keySearch);
+
 		for (var entryElm of ε.$ ("div.searchentrywrapper", true)) {
 			let entryKey = ε.attr (entryElm, "searchkey");
 			let entryTags = ε.attr (entryElm, "tags");
 			let entryDesc = ε.$ ("p", false, entryElm);
+			console.log (entryElm, entryTags, entryDesc, entryKey);
 
 			let flag = true;
 
