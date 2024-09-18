@@ -170,9 +170,9 @@ class Σ {
 		let keySearch = "";
 
 		console.log ([...query.matchAll (Σ.RX_TAG)]);
-		query = query.matchAll (Σ.RX_TAG).replaceAll (Σ.RX_TAG, "");
+		query = query.replaceAll (Σ.RX_TAG, "");
 		console.log ([...query.matchAll (Σ.RX_DESC)]);
-		query = query.matchAll (Σ.RX_DESC).replaceAll (Σ.RX_DESC, "");
+		query = query.replaceAll (Σ.RX_DESC, "");
 		keySearch = query;
 
 		console.log (keySearch);
