@@ -84,44 +84,48 @@ class ε {
 
 class φ {
 	static entries = [];
+
+	static pushEntry (entryData = {}) {
+		φ.entries.push (new φ (entryData));
+	}
 	
-	static loadFrom (url) {
-		let xhr = new XMLHttpRequest ();
-		xhr.open ("GET", url);
-		xhr.setRequestHeader ("Cache-control", "no-cache, no-store, max-age=0");
-		xhr.setRequestHeader ("Expires", "Tue, 01 Jan 1980 1:00:00 GMT");
-		xhr.setRequestHeader ("Pragma", "no-cache");
-		xhr.onload = function (data) {
-			let respTxt = data.target.response;
-			let xml = new DOMParser ().parseFromString (respTxt, "text/xml");
+	static loadEntries (url) {
+		// let xhr = new XMLHttpRequest ();
+		// xhr.open ("GET", url);
+		// xhr.setRequestHeader ("Cache-control", "no-cache, no-store, max-age=0");
+		// xhr.setRequestHeader ("Expires", "Tue, 01 Jan 1980 1:00:00 GMT");
+		// xhr.setRequestHeader ("Pragma", "no-cache");
+		// xhr.onload = function (data) {
+		// 	let respTxt = data.target.response;
+		// 	let xml = new DOMParser ().parseFromString (respTxt, "text/xml");
 			
-			console.log (xml);
+		// 	console.log (xml);
 			
-			for (let entry of xml.querySelectorAll ("entry")) {
-				let _name = ε.attr (entry, "name");
-				let _key = ε.attr (entry, "key", _name.toLowerCase ());
-				let _desc = entry.querySelector ("description").innerHTML;
-				let _tags = [];
+		// 	for (let entry of xml.querySelectorAll ("entry")) {
+		// 		let _name = ε.attr (entry, "name");
+		// 		let _key = ε.attr (entry, "key", _name.toLowerCase ());
+		// 		let _desc = entry.querySelector ("description").innerHTML;
+		// 		let _tags = [];
 				
-				for (let _t of entry.querySelectorAll ("tag")) _tags.push (_t.innerHTML);
+		// 		for (let _t of entry.querySelectorAll ("tag")) _tags.push (_t.innerHTML);
 				
-				φ.entries.push (new φ ({
-					title: _name,
-					searchkey: _key,
-					description: _desc,
-					tags: _tags
-				}));
-			}
-		}
-		xhr.send ();
+		// 		φ.pushEntry ({
+		// 			title: _name,
+		// 			searchkey: _key,
+		// 			description: _desc,
+		// 			tags: _tags
+		// 		});
+		// 	}
+		// }
+		// xhr.send ();
+
 	}
 	
 	constructor (entryData = {}) {
 		this.title = entryData.title;
-		this.searchkey = optional (obj, "searchkey", entryData.title);
+		this.searchkey = optional (obj, "key", entryData.title);
 		this.description = optional (obj, "description", null);
 		this.tags = optional (obj, "tags", []);
-		if (this.tags.constructor !== Array) this.tags = [ this.tags ];
 		
 		φ.entries.push (this);
 	}
@@ -146,4 +150,20 @@ class φ {
 		.event ("click", () => { console.log ("A"); })
 		.add (elmH);
 	}
+}
+
+let databases = ε.attr (document.currentScript, "databases", "").split (" ");
+let loaded = databases.map ((val) => false);
+
+let head = document.querySelector ("head");
+for (var db of databases) {
+	let dbURL = `https://urielmorningstar.github.io/SOPAW/${db}.js`;
+
+	let dbScript = ε("script")
+					.attr ("src", dbURL)
+					.mark ("database-script")
+					.event ("load", (evt) => {
+						console.log (evt);
+					})
+					.add (head);
 }
