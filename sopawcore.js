@@ -159,7 +159,7 @@ let head = document.querySelector ("head");
 for (var db of databases) {
 	let dbURL = `https://urielmorningstar.github.io/SOPAW/${db}.js`;
 
-	let dbScript = ε("script")
+	let dbScript = new ε("script")
 					.attr ("src", dbURL)
 					.mark ("database-script")
 					.event ("load", (evt) => {
