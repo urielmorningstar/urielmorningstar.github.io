@@ -194,15 +194,11 @@ class Σ {
 	static searchFromBar () { Σ.search (Σ.searchBar.value, false); }
 
 	static search (query, updateSearchbar = true) {
-		let tagSearches = [];
-		let descSearches = [];
-		let keySearch = "";
-
-		let tagSearches = [...query.matchAll (Σ.RX_TAG)];
+		let tagSearches = [...query.matchAll (Σ.RX_TAG)].map ((val) => val[1]);
 		query = query.replaceAll (Σ.RX_TAG, "");
-		let descSearches = [...query.matchAll (Σ.RX_DESC)];
+		let descSearches = [...query.matchAll (Σ.RX_DESC)].map ((val) => val[1]);
 		query = query.replaceAll (Σ.RX_DESC, "");
-		keySearch = query.replaceAll (Σ.RX_WHITESPACE, " ");
+		let keySearch = query.replaceAll (Σ.RX_WHITESPACE, " ");
 
 		for (var entryElm of ε.$ ("div.searchentrywrapper", true)) {
 			let entryKey = ε.attr (entryElm, "searchkey");
