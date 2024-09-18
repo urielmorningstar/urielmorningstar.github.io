@@ -92,6 +92,7 @@ class ε {
 //
 
 class φ {
+	static searchEntryContainer = null;
 	static entries = [];
 	
 	static loadEntries () {
@@ -108,31 +109,43 @@ class φ {
 	}
 	
 	createElement () {
-		let elmW = ε("div")
+		if (φ.searchEntryContainer == null) {
+			φ.searchEntryContainer = ε.$ ("div#searchentries");
+			if (φ.searchEntryContainer == null) φ.searchEntryContainer = new ε("div")
+				.id ("searchentries")
+				.add ();
+		}
+
+		let elmW = new ε("div")
 		.cls ("searchentrywrapper")
 		.mark ("visible")
 		.attr ("searchkey", this.searchkey)
 		.attr ("tags", this.tags.join(";"))
-		.add ();
+		.add (φ.searchEntryContainer);
 		
-		let elmM = ε("div")
+		let elmM = new ε("div")
 		.cls ("searchentry")
 		.add (elmW);
 		
-		let elmH = ε("h1")
+		let elmH = new ε("h1")
 		.add (elmM);
 		
-		let elmHA = ε("a")
+		let elmHA = new ε("a")
 		.attr ("href", "")
+		.content (this.title)
 		.event ("click", () => { console.log ("A"); })
 		.add (elmH);
+
+		let elmP = new ε("p")
+		.content (this.description)
+		.add (elmM);
 	}
 }
 
 let databases = ε.attr (document.currentScript, "databases", "").split (" ");
 let unloaded = [...databases];
 
-let head = document.querySelector ("head");
+let head = ε.$ ("head");
 for (var db of databases) {
 	let dbURL = `https://urielmorningstar.github.io/SOPAW/${db}.js`;
 
