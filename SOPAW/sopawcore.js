@@ -160,6 +160,7 @@ class φ {
 		let elmHA = elmHAbuilder.add (elmH);
 
 		if (this.tags.length > 0) {
+			let elmT = new ε("h2").add (elmM);
 			for (var i = 0; i < this.tags.length; i++) {
 				if (i != 0) new ε("span").content(", ").add(elmM);
 				let tag = this.tags [i];
@@ -171,7 +172,7 @@ class φ {
 					.event ("click", () => {
 						Σ.search ("#" + tag);
 					})
-					.add (elmM);
+					.add (elmT);
 			}
 		}
 
