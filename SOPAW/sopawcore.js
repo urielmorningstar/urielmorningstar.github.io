@@ -155,13 +155,7 @@ class φ {
 		.attr ("href", "#")
 		.mark ("title-link")
 		.content (this.title)
-		
-		if (this.link != null) {
-			elmHAbuilder.event ("click", () => {
-				window.open (this.link).focus ();
-			});
-		}
-		
+		if (this.link != null) elmHAbuilder.attr ("href", this.link);
 		let elmHA = elmHAbuilder.add (elmH);
 
 		if (this.tags.length > 0) {
@@ -170,7 +164,7 @@ class φ {
 				if (i != 0) new ε("span").content(", ").add(elmT);
 				let tag = this.tags [i];
 
-				new ε("a")
+				new ε("span")
 					.content (tag)
 					.attr ("href", "#")
 					.mark ("tag-link")
