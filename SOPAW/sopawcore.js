@@ -198,13 +198,24 @@ class Σ {
 		let descSearches = [];
 		let keySearch = "";
 
-		console.log ([...query.matchAll (Σ.RX_TAG)]);
+		let tagSearches = [...query.matchAll (Σ.RX_TAG)];
 		query = query.replaceAll (Σ.RX_TAG, "");
-		console.log ([...query.matchAll (Σ.RX_DESC)]);
+		let descSearches = [...query.matchAll (Σ.RX_DESC)];
 		query = query.replaceAll (Σ.RX_DESC, "");
 		keySearch = query.replaceAll (Σ.RX_WHITESPACE, " ");
 
-		console.log (keySearch);
+		for (var entryElm of ε.$ ("div.searchentrywrapper", true)) {
+			let entryKey = ε.attr (entryElm, "searchkey");
+			let entryTags = ε.attr (entryElm, "tags");
+			let entryDesc = ε.$ ("p", false, entryElm);
+
+			if (!entryKey.includes (keySearch)) continue;
+			if (false in tagSearches.map ((val) => entryTags.includes (val))) continue;
+			if (false in descSearches.map ((val) => entryDesc.includes (val))) continue;
+		}
+
+		// console.log (keySearch);
+		if (updateSearchbar) Σ.searchBar.value = query;
 	}
 
 }
