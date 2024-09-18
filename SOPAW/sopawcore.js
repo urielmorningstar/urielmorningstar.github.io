@@ -210,6 +210,10 @@ class Σ {
 
 			let flag = true;
 
+			console.log (!entryKey.includes (keySearch));
+			console.log (tagSearches.map ((val) => entryTags.includes (val)));
+			console.log (descSearches.map ((val) => entryDesc.includes (val)));
+
 			if (!entryKey.includes (keySearch)) flag = false;
 			if (false in tagSearches.map ((val) => entryTags.includes (val))) flag = false;
 			if (false in descSearches.map ((val) => entryDesc.includes (val))) flag = false;
