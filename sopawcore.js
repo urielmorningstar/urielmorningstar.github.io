@@ -26,7 +26,7 @@ class ε {
 		elm.setAttribute (attribute, val);
 	}
 	
-	static Mark (elm, attrbiute) {
+	static Mark (elm, attribute) {
 		elm.setAttribute (attribute, "");
 	}
 	
