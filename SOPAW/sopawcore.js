@@ -97,6 +97,8 @@ class φ {
 	
 	static loadEntries () {
 		for (var entry of ENTRY_DUMP) new φ (entry);
+		φ.entries.sort ((a, b) =>
+			a.title.toLowerCase ().localeCompare (b.title.toLowerCase ()));
 		for (var entry of φ.entries) entry.createElement ();
 	}
 	
