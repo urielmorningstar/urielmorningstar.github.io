@@ -1,10 +1,10 @@
 {
-	searchentries: [
+	"searchentries": [
 		{
-			title: "Aphrodite",
-			key: "aphrodite"
-			description: "A deity from hellenism that rules over the domain of love, beauty, physical attraction, and sexuality."
-			tags: [ "Deity", "Hellenism" ]
+			"title": "Aphrodite",
+			"key": "aphrodite"
+			"description": "A deity from hellenism that rules over the domain of love, beauty, physical attraction, and sexuality."
+			"tags": [ "Deity", "Hellenism" ]
 		}
 	]
 }
