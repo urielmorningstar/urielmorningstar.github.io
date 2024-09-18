@@ -205,9 +205,14 @@ class Σ {
 			let entryTags = ε.attr (entryElm, "tags");
 			let entryDesc = ε.$ ("p", false, entryElm);
 
-			if (!entryKey.includes (keySearch)) continue;
-			if (false in tagSearches.map ((val) => entryTags.includes (val))) continue;
-			if (false in descSearches.map ((val) => entryDesc.includes (val))) continue;
+			let flag = true;
+
+			if (!entryKey.includes (keySearch)) flag = false;
+			if (false in tagSearches.map ((val) => entryTags.includes (val))) flag = false;
+			if (false in descSearches.map ((val) => entryDesc.includes (val))) flag = false;
+
+			if (flag) ε.mark (entryElm, "visible");
+			else ε.rem (entryElm, "visible");
 		}
 
 		// console.log (keySearch);
