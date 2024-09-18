@@ -1,0 +1,101 @@
+html::-webkit-scrollbar, body::-webkit-scrollbar { display:none }
+html, body{ -ms-overflow-style:none; scrollbar-width:none }
+
+body {
+    font-size:1.2em;
+    font-family:open sans,sans-serif
+}
+
+input {
+    font-size:1em;
+    outline:none;
+    padding:.5em;
+    border:none;
+    filter:drop-shadow(0.2em 0.2em 0 #00000090);
+    font-family:inherit;
+    width:calc(100% - 1.6em);
+    margin:.8em;
+    margin-bottom:1em;
+    background:#efefef;
+    transition:background .24s ease-in
+}
+
+input:hover, input:focus{
+    background:#d6d6d6
+}
+
+div#searchentries {
+    padding:0 .8em;
+    margin:.05em
+}
+
+div.searchentrywrapper {
+    display:grid;
+    grid-template-rows:0fr;
+    overflow:hidden;
+    transition:all .6s ease;
+    filter:none;
+    margin-bottom:0
+}
+
+div.searchentrywrapper[visible] {
+    grid-template-rows:1fr;
+    margin-bottom:.8em;
+    filter:drop-shadow(0.15em 0.15em 0 #00000040)
+}
+
+div.searchentry {
+    padding:1.2em;
+    background:#e5e5e5;
+    transition:background .2s ease-in,padding .6s ease,transform .6s ease;
+    overflow:hidden;
+    transform-origin:top;
+    transform:scaleY(1)
+}
+
+div.searchentry:hover, div.searchentry:focus{
+    background:#cacaca
+}
+
+div.searchentrywrapper:not([visible]) div.searchentry {
+    padding-top:0;
+    padding-bottom:0;
+    transform:scaleY(0)
+}
+
+h1 {
+    margin:0;
+    font-size:1.5em
+}
+
+h2 {
+    margin:0;
+    font-weight:400;
+    font-size:1em;
+    font-style:italic
+}
+
+p {
+    margin:0;
+    font-size:.8em
+}
+
+a[title-link] {
+    color:#000;
+    text-decoration:none;
+    transition:all .2s ease-in
+}
+
+a[title-link]:focus, a[title-link]:hover {
+    color:#777;
+    cursor:pointer
+}
+
+a[tag-link], a[search-link-embed] {
+    transition:font-weight .2s ease-in
+}
+
+a[tag-link]:hover, a[search-link-embed]:hover {
+    cursor:pointer;
+    font-weight:700
+}
