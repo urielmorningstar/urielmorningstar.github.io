@@ -4,7 +4,7 @@ var _ = {
 			"title": "Samhain",
 			"key": "samhain",
 			"description": "A holiday.",
-			"tags": [ "Wheel of the Year", "Sabbat" ]
+			"tags": [ "Wheel-of-the-Year", "Sabbat" ]
 		}
 	]
 };
