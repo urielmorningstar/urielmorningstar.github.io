@@ -214,9 +214,12 @@ class Σ {
 			console.log (tagSearches.map ((val) => entryTags.includes (val)));
 			console.log (descSearches.map ((val) => entryDesc.includes (val)));
 
+			let t1 = tagSearches.map ((val) => entryTags.includes (val));
+			let t2 = descSearches.map ((val) => entryDesc.includes (val));
+
 			if (!entryKey.includes (keySearch)) flag = false;
-			if (!tagSearches.map ((val) => entryTags.includes (val)).includes (true)) flag = false;
-			if (!descSearches.map ((val) => entryDesc.includes (val)).includes (true)) flag = false;
+			if (t1.includes (false) || t1 == []) flag = false;
+			if (t2.includes (false) || t2 == []) flag = false;
 
 			if (flag) ε.mark (entryElm, "visible");
 			else ε.rem (entryElm, "visible");
