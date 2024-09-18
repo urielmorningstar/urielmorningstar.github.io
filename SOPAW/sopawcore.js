@@ -205,7 +205,7 @@ class Σ {
 		for (var entryElm of ε.$ ("div.searchentrywrapper", true)) {
 			let entryKey = ε.attr (entryElm, "searchkey");
 			let entryTags = ε.attr (entryElm, "tags");
-			let entryDesc = ε.$ ("p", false, entryElm);
+			let entryDesc = ε.$ ("p", false, entryElm).innerHTML;
 			console.log (entryElm, entryTags, entryDesc, entryKey);
 
 			let flag = true;
