@@ -100,6 +100,11 @@ class φ {
 		φ.entries.sort ((a, b) =>
 			a.title.toLowerCase ().localeCompare (b.title.toLowerCase ()));
 
+		new ε("p")
+			.content ("To use the following search, you can search by entry title, by entry tags (using a #), and things in an entry's description (using \"...\").")
+			.mark ("help-text")
+			.add();
+		
 		Σ.searchBar = new ε("input")
 			.id ("searchkey")
 			.attr ("type", "text")
