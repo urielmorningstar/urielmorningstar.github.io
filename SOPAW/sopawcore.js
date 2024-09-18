@@ -99,7 +99,6 @@ class φ {
 		for (var entry of ENTRY_DUMP) new φ (entry);
 		φ.entries.sort ((a, b) =>
 			a.title.toLowerCase ().localeCompare (b.title.toLowerCase ()));
-		for (var entry of φ.entries) entry.createElement ();
 
 		Σ.searchBar = new ε("input")
 			.id ("searchkey")
@@ -111,6 +110,8 @@ class φ {
 			.event ("input", Σ.searchFromBar)
 			.event ("paste", Σ.searchFromBar)
 			.add ();
+
+		for (var entry of φ.entries) entry.createElement ();
 	}
 	
 	constructor (entryData = {}) {
@@ -169,7 +170,12 @@ class Σ {
 		let keySearch = "";
 
 		console.log ([...query.matchAll (Σ.RX_TAG)]);
+		query = query.matchAll (Σ.RX_TAG).replaceAll (Σ.RX_TAG, "");
 		console.log ([...query.matchAll (Σ.RX_DESC)]);
+		query = query.matchAll (Σ.RX_DESC).replaceAll (Σ.RX_DESC, "");
+		keySearch = query;
+
+		console.log (keySearch);
 	}
 
 }
