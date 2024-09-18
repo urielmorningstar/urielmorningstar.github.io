@@ -107,7 +107,7 @@ class φ {
 			.event ("change", Σ.searchFromBar)
 			.event ("keydown", Σ.searchFromBar)
 			// .event ("beforeinput", Σ.searchFromBar)
-			// .event ("input", Σ.searchFromBar)
+			.event ("input", Σ.searchFromBar)
 			.event ("paste", Σ.searchFromBar)
 			.add ();
 
@@ -215,8 +215,8 @@ class Σ {
 			console.log (descSearches.map ((val) => entryDesc.includes (val)));
 
 			if (!entryKey.includes (keySearch)) flag = false;
-			if (false in tagSearches.map ((val) => entryTags.includes (val))) flag = false;
-			if (false in descSearches.map ((val) => entryDesc.includes (val))) flag = false;
+			if (tagSearches.map ((val) => entryTags.includes (val)).includes (false)) flag = false;
+			if (descSearches.map ((val) => entryDesc.includes (val)).includes (false)) flag = false;
 
 			if (flag) ε.mark (entryElm, "visible");
 			else ε.rem (entryElm, "visible");
