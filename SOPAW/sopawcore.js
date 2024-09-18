@@ -239,7 +239,7 @@ let unloaded = [...databases];
 
 let head = ε.$ ("head");
 for (var db of databases) {
-	let dbURL = `https://urielmorningstar.github.io/SOPAW/${db}.js`;
+	let dbURL = `https://urielmorningstar.github.io/SOPAW/dictionaries/${db}.js`;
 
 	let dbScript = new ε("script")
 		.attr ("src", dbURL)
