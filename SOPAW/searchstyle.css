@@ -92,10 +92,13 @@ a[title-link]:focus, a[title-link]:hover {
 }
 
 a[tag-link], a[search-link-embed] {
-    transition:font-weight .2s ease-in
+    color: #000;
+    text-decoration: none;
+    transition:font-weight .2s ease-in;
 }
 
 a[tag-link]:hover, a[search-link-embed]:hover {
+    color: #777;
     cursor:pointer;
     font-weight:700
 }
