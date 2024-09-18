@@ -186,8 +186,8 @@ class φ {
 }
 
 class Σ {
-	static RX_TAG = /#([^#"\s]+)/g;
-	static RX_DESC = /"([^"]+)"/g;
+	static RX_TAG = /#([^#"\s]*)/g;
+	static RX_DESC = /"([^"]*)"/g;
 	static RX_WHITESPACE = /\s+/g;
 
 	static searchBar;
@@ -239,13 +239,13 @@ for (var db of databases) {
 	let dbURL = `https://urielmorningstar.github.io/SOPAW/${db}.js`;
 
 	let dbScript = new ε("script")
-					.attr ("src", dbURL)
-					.attr ("database-name", db)
-					.mark ("database-script")
-					.event ("load", (evt) => {
-						let dbName = ε.attr (evt.target, "database-name");
-						removeItem (unloaded, dbName);
-						if (unloaded.length == 0) φ.loadEntries ();
-					})
-					.add (head);
+		.attr ("src", dbURL)
+		.attr ("database-name", db)
+		.mark ("database-script")
+		.event ("load", (evt) => {
+			let dbName = ε.attr (evt.target, "database-name");
+			removeItem (unloaded, dbName);
+			if (unloaded.length == 0) φ.loadEntries ();
+		})
+		.add (head);
 }
