@@ -76,7 +76,7 @@ class ε {
 	}
 	
 	event (evt, callback) {
-		this ["on" + evt] = callback;
+		this.element.addEventListener (evt, callback);
 		return this;
 	}
 }
