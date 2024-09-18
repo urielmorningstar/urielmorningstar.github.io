@@ -162,7 +162,7 @@ class φ {
 		if (this.tags.length > 0) {
 			let elmT = new ε("h2").add (elmM);
 			for (var i = 0; i < this.tags.length; i++) {
-				if (i != 0) new ε("span").content(", ").add(elmM);
+				if (i != 0) new ε("span").content(", ").add(elmT);
 				let tag = this.tags [i];
 
 				new ε("a")
