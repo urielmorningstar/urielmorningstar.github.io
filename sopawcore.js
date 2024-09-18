@@ -164,7 +164,7 @@ for (var db of databases) {
 					.attr ("src", dbURL)
 					.mark ("database-script")
 					.event ("load", (evt) => {
-						console.log (evt);
+						console.log (evt.target);
 					})
 					.add (head);
 }
