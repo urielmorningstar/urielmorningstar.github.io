@@ -100,9 +100,9 @@ class φ {
 	
 	constructor (entryData = {}) {
 		this.title = entryData.title;
-		this.searchkey = optional (obj, "key", entryData.title);
-		this.description = optional (obj, "description", null);
-		this.tags = optional (obj, "tags", []);
+		this.searchkey = optional (entryData, "key", entryData.title);
+		this.description = optional (entryData, "description", null);
+		this.tags = optional (entryData, "tags", []);
 		
 		φ.entries.push (this);
 	}
