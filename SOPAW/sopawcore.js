@@ -160,6 +160,7 @@ class φ {
 class Σ {
 	static RX_TAG = /#([^#"\s]+)/g;
 	static RX_DESC = /"([^"]+)"/g;
+	static RX_WHITESPACE = /\s+/g;
 
 	static searchBar;
 	static searchFromBar () { Σ.search (Σ.searchBar.value); }
@@ -173,7 +174,7 @@ class Σ {
 		query = query.replaceAll (Σ.RX_TAG, "");
 		console.log ([...query.matchAll (Σ.RX_DESC)]);
 		query = query.replaceAll (Σ.RX_DESC, "");
-		keySearch = query;
+		keySearch = query.replaceAll (Σ.RX_WHITESPACE, " ");
 
 		console.log (keySearch);
 	}
