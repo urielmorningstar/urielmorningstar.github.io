@@ -194,25 +194,25 @@ class Σ {
 	static searchFromBar () { Σ.search (Σ.searchBar.value, false); }
 
 	static search (query, updateSearchbar = true) {
-		let tagSearches = [...query.matchAll (Σ.RX_TAG)].map ((val) => val[1]);
+		let tagSearches = [...query.matchAll (Σ.RX_TAG)].map ((val) => val[1]).map ((val) => val.toLowerCase ());
 		query = query.replaceAll (Σ.RX_TAG, "");
-		let descSearches = [...query.matchAll (Σ.RX_DESC)].map ((val) => val[1]);
+		let descSearches = [...query.matchAll (Σ.RX_DESC)].map ((val) => val[1]).map ((val) => val.toLowerCase ());
 		query = query.replaceAll (Σ.RX_DESC, "");
-		let keySearch = query.replaceAll (Σ.RX_WHITESPACE, " ");
+		let keySearch = query.replaceAll (Σ.RX_WHITESPACE, " ").toLowerCase ();
 
-		console.log (tagSearches, descSearches, keySearch);
+		// console.log (tagSearches, descSearches, keySearch);
 
 		for (var entryElm of ε.$ ("div.searchentrywrapper", true)) {
-			let entryKey = ε.attr (entryElm, "searchkey");
-			let entryTags = ε.attr (entryElm, "tags");
-			let entryDesc = ε.$ ("p", false, entryElm).innerHTML;
-			console.log (entryElm, entryTags, entryDesc, entryKey);
+			let entryKey = ε.attr (entryElm, "searchkey").toLowerCase ();
+			let entryTags = ε.attr (entryElm, "tags").toLowerCase ();
+			let entryDesc = ε.$ ("p", false, entryElm).innerHTML.toLowerCase ();
+			// console.log (entryElm, entryTags, entryDesc, entryKey);
 
 			let flag = true;
 
-			console.log (!entryKey.includes (keySearch));
-			console.log (tagSearches.map ((val) => entryTags.includes (val)));
-			console.log (descSearches.map ((val) => entryDesc.includes (val)));
+			// console.log (!entryKey.includes (keySearch));
+			// console.log (tagSearches.map ((val) => entryTags.includes (val)));
+			// console.log (descSearches.map ((val) => entryDesc.includes (val)));
 
 			let t1 = tagSearches.map ((val) => entryTags.includes (val));
 			let t2 = descSearches.map ((val) => entryDesc.includes (val));
