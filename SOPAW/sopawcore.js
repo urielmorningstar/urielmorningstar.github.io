@@ -97,6 +97,7 @@ class φ {
 	
 	static loadEntries () {
 		for (var entry of ENTRY_DUMP) new φ (entry);
+		for (var entry of φ.entries) entry.createElement ();
 	}
 	
 	constructor (entryData = {}) {
@@ -131,7 +132,7 @@ class φ {
 		.add (elmM);
 		
 		let elmHA = new ε("a")
-		.attr ("href", "")
+		.attr ("href", "#")
 		.content (this.title)
 		.event ("click", () => { console.log ("A"); })
 		.add (elmH);
