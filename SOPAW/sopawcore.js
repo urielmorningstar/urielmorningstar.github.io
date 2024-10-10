@@ -110,7 +110,64 @@ class φ {
 			.attr ("type", "text")
 			.attr ("placeholder", "Search...")
 			.event ("change", Σ.searchFromBar)
-			.event ("keydown", Σ.searchFromBar)
+			.event ("keydown", (evt) => {
+				var text0 = evt.srcElement.value;
+				var text1 = text0;
+				var i0 = evt.srcElement.selectionStart;
+				var i1 = evt.srcElement.selectionEnd;
+			
+				if (i0 != i1) return;
+			
+				if (evt.key == "Backspace") {
+					if (text0 [i0 - 2] == '"') {
+						text1 = text0.substring (0, i0 - 2) + text0.substring (i0, text0.length);
+						evt.preventDefault ();
+						evt.target.value = text1;
+						evt.target.selectionStart = i0 - 2;
+						evt.target.selectionEnd = i0 - 2;
+					} else {
+						text1 = text0.substring (0, i0 - 1) + text0.substring (i0 + 1, text0.length);
+						evt.preventDefault ();
+						evt.target.value = text1;
+						evt.target.selectionStart = i0 - 1;
+						evt.target.selectionEnd = i0 - 1;
+					}
+			
+				}
+				
+				Σ.searchFromBar ();
+			})
+			.event ("keypress", (evt) => {
+				if (evt.key == '"') {
+					var text0 = evt.srcElement.value;
+					var text1 = text0;
+					var i0 = evt.srcElement.selectionStart;
+					var i1 = evt.srcElement.selectionEnd;
+			
+					var qtCt = 0;
+					for (var char of text0) qtCt += (char == '"' ? 1 : 0);
+			
+					if (i0 == i1) {
+						if (text0 [i0] == '"') {
+							evt.preventDefault ();
+							evt.target.selectionStart = i0 + 1;
+						} else if (qtCt % 2 == 0 && text0 [i0 - 1] != '"') {
+							text1 = text0.substring (0, i0) + '""' + text0.substring (i0, text0.length);
+							evt.preventDefault ();
+							evt.target.value = text1;
+							evt.target.selectionStart = i0 + 1;
+							evt.target.selectionEnd = i0 + 1;
+						}
+					} else {
+						text1 = text0.substring (0, i0) + '"' + text0.substring (i0, i1) + '"' + text0.substring (i1, text0.length);
+						evt.preventDefault ();
+						evt.target.value = text1;
+						evt.target.setSelectionRange (i0 + 1, i1 + 1);
+					}
+				}
+				
+				Σ.searchFromBar ();
+			})
 			// .event ("beforeinput", Σ.searchFromBar)
 			.event ("input", Σ.searchFromBar)
 			.event ("paste", Σ.searchFromBar)
