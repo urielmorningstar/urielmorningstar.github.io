@@ -119,7 +119,7 @@ class φ {
 				if (i0 != i1) return;
 			
 				if (evt.key == "Backspace") {
-					if (text0 [i0] == '"') {
+					if (text0 [i0] == '"' && text0 [i0 - 1] == '"') {
 						text1 = text0.substring (0, i0 - 1) + text0.substring (i0 + 1, text0.length);
 						evt.preventDefault ();
 						evt.target.value = text1;
