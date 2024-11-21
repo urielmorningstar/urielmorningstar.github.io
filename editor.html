@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Edit Database</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="text/javascript">
+			var INDEX = 0;
+
+			const _DC = (arr => JSON.parse (JSON.stringify (arr)));
+			function _WO (arr, ...keys) {
+				var cp = _DC (arr);
+				for (var key of keys)
+					delete cp [key];
+				return cp;
+			}
+
+			const RE_ESC_re = /[/\-\\^$*+?.()|[\]{}]/;
+			const RE_ESC = (txt => txt.replace (RE_ESC_re, '\\$&'));
+
+			var file_re = /({[\w\W\n\r]+});/m;
+
+			var header = "var _ = ";
+			var footer = ";\n\nif (typeof ENTRY_DUMP === 'undefined') ENTRY_DUMP = _.searchentries;\nelse ENTRY_DUMP.push(..._.searchentries);";
+			const _OUTS0 = (() => { return { searchentries: CurrentData.searchentries.map ((val) => _WO (val, "title_key")) }});
+			const _OUTS1 = (() => JSON.stringify (_OUTS0 (), null, "\t"));
+			const OUTS = (() => header + _OUTS1 () + footer);
+
+			var LoadedData = { searchentries: [] };
+			var CurrentData = { searchentries: [] };
+
+			var collapseContainer;
+
+			function Download (txt) {
+				var elm = document.createElement ("a");
+				elm.setAttribute ("href", "data:text/javascript;charset=utf-8," + encodeURIComponent (txt));
+				elm.setAttribute ("download", "outputdatabase.js");
+				elm.style.display = 'none';
+
+				document.body.appendChild (elm);
+				elm.click ();
+				document.body.removeChild (elm);
+			}
+
+			async function HandleFile (e) {
+				// Flush current data
+				if (LoadedData.searchentries.length > 0)
+					LoadedData.searchentries = [];
+				if (CurrentData.searchentries.length > 0)
+					CurrentData.searchentries = [];
+
+				for (var elm of collapseContainer.children)
+					collapseContainer.removeChild (elm);
+
+				// Load file data
+				var files = e.target.files;
+				var file = files [0];
+
+				var txt = await file.text ();
+				console.log ("Loaded text!");
+				var json_txt = file_re.exec (txt) [1];
+
+				var _ = JSON.parse (json_txt);
+				LoadedData.searchentries = _.searchentries;
+				CurrentData.searchentries = _.searchentries.map ((val) => { return {...val, title_key: val.title}});
+				console.log (LoadedData);
+
+				for (var grp of LoadedData.searchentries)
+					CreateGroup (grp);
+			}
+
+			function DropdownToggle (evt) {
+				var elm = evt.target.parentNode.parentNode;
+				if (elm.hasAttribute ("show"))
+					elm.removeAttribute ("show");
+				else elm.setAttribute ("show", "")
+			}
+
+			function CloseCollapsible (evt) {
+				var elm = evt.target.parentNode.parentNode;
+				var title_key = elm.getAttribute ("title_key");
+				
+				var index = CurrentData.searchentries.findIndex (arr_elm => (arr_elm.title == title_key));
+				CurrentData.searchentries.splice (index, 1);
+
+				elm.parentNode.removeChild (elm);
+			}
+
+			function UpdateData (e) {
+				var elm = e.target;
+				var val = elm.value.trim ();
+				var data_type = elm.getAttribute ("data_type");
+				var title_key = elm.getAttribute ("title_key");
+
+				var entry = CurrentData.searchentries.find ((arr) => (arr.title_key == title_key));
+				if (data_type != "tags")
+					entry [data_type] = val;
+				else
+					entry [data_type] = val.split (",");
+
+				// console.log (data_type, "of", '"' + title_key + '"', "is now", '"' + val + '"');
+			}
+
+			document.addEventListener ("keydown", (evt) => {
+				if (evt.altKey && evt.key == "c") {
+					evt.preventDefault ();
+					
+					var new_info = { title: "Untitled (" + (INDEX++) + ")", key: "", description: "", tags: [], link: "" };
+					new_info.title_key = new_info.title;
+					CurrentData.searchentries.push (new_info);
+
+					var box = CreateGroup (new_info);
+					box.setAttribute ("show", "");
+				}
+
+				if ((evt.ctrlKey || evt.metaKey) && evt.key == 's') {
+					evt.preventDefault ();
+					Download (OUTS ());
+				}
+			});
+
+			window.onload = (evt) => {
+				collapseContainer = document.querySelector ("div.collapse-container");
+				document.querySelector ("input#file_upload").addEventListener ("change", HandleFile);
+				document.querySelector ("input#search_bar").addEventListener ("input", Search);
+			}
+
+			function UpdateTitle (event) {
+				var n = event.target.value.trim ();
+				var btn = event.target.parentNode.parentNode.querySelector ("button");
+				btn.innerHTML = (n == "" ? "?" : n);
+				UpdateData (event);
+			}
+
+			function Search (event) {
+				var query = event.target.value.trim ().toLowerCase ();
+				var reQ = new RegExp (RE_ESC (query));
+
+				for (var entry of collapseContainer.children) {
+					var title_key = entry.getAttribute ("title_key");
+					var inc = (title_key.toLowerCase ().search (reQ) != -1);
+
+					if (inc) entry.removeAttribute ("hide");
+					else entry.setAttribute ("hide", "");
+				}
+			}
+
+			function CreateGroup (data) {
+				var collapseBox = document.createElement ("div"); collapseBox.classList.add ("collapse-box"); collapseBox.setAttribute ("title_key", data.title);
+				var collapse = document.createElement ("div"); collapse.classList.add ("collapse");
+				var collapseBtns = document.createElement ("div"); collapseBtns.classList.add ("collapse-buttons");
+
+				var btn = document.createElement ("button"); btn.innerHTML = data.title; btn.classList.add ("collapse"); btn.onclick = DropdownToggle;
+				var x_btn = document.createElement ("button"); x_btn.classList.add ("close"); x_btn.onclick = CloseCollapsible;
+
+				var b_title = document.createElement ("b"); b_title.innerHTML 	= "Title";
+				var b_key 	= document.createElement ("b"); b_key.innerHTML 	= "Search Key";
+				var b_tags 	= document.createElement ("b"); b_tags.innerHTML 	= "Tags";
+				var b_desc 	= document.createElement ("b"); b_desc.innerHTML 	= "Description";
+				var b_link 	= document.createElement ("b"); b_link.innerHTML 	= "Link";
+
+				var i_title = document.createElement ("input"); i_title.value 			= data.title;			i_title.type = "text";				i_title.classList.add ("data");		i_title.setAttribute ("data_type", "title");			i_title.setAttribute ("title_key", data.title);
+				var i_key 	= document.createElement ("input"); i_key.value 			= data.key;				i_key.type = "text";				i_key.classList.add ("data");		i_key.setAttribute ("data_type", "key");				i_key.setAttribute ("title_key", data.title);
+				var i_tags 	= document.createElement ("input"); i_tags.value 			= data.tags;			i_tags.type = "text";				i_tags.classList.add ("data");		i_tags.setAttribute ("data_type", "tags");				i_tags.setAttribute ("title_key", data.title);
+				var i_desc 	= document.createElement ("textarea"); i_desc.innerHTML		= data.description;		i_desc.setAttribute ("rows", 7);	i_desc.classList.add ("data");		i_desc.setAttribute ("data_type", "description");		i_desc.setAttribute ("title_key", data.title);
+				var i_link 	= document.createElement ("input"); i_link.value 			= data.link;			i_link.type = "text";				i_link.classList.add ("data");		i_link.setAttribute ("data_type", "link");				i_link.setAttribute ("title_key", data.title);
+
+				i_title.oninput = UpdateTitle;
+				i_key.oninput = UpdateData;
+				i_tags.oninput = UpdateData;
+				i_desc.oninput = UpdateData;
+				i_link.oninput = UpdateData;
+
+				let br = () => { var tmp = document.createElement ("br"); collapse.appendChild (tmp); };
+
+				collapse.appendChild (b_title);	collapse.appendChild (i_title);	br (); br ();
+				collapse.appendChild (b_key);	collapse.appendChild (i_key);	br (); br ();
+				collapse.appendChild (b_tags);	collapse.appendChild (i_tags);	br (); br ();
+				collapse.appendChild (b_desc);	collapse.appendChild (i_desc);	br (); br (); br (); br (); br (); br (); br ();
+				collapse.appendChild (b_link);	collapse.appendChild (i_link);	br (); br ();
+
+				collapseBtns.appendChild (btn);
+				collapseBtns.appendChild (x_btn);
+
+				collapseBox.appendChild (collapseBtns)
+				collapseBox.appendChild (collapse);
+
+				collapseContainer.appendChild (collapseBox);
+
+				return collapseBox;
+			}
+		</script>
+		<style>
+
+			div.search-container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				height: 4em;
+				margin: 0;
+				padding: 0;
+			}
+
+			div.collapse-container {
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-start;
+				align-items: center;
+				width: 100%;
+				height: calc(100% - 12em);
+				overflow-x: hidden;
+				overflow-y: scroll;
+				scrollbar-width: none;
+				background: #f5f5f5;
+			}
+			
+			div.collapse-box {
+				width: calc(100% - 2em);
+				margin: 1em 0;
+				padding: 0;
+				transition: all 0.2s ease;
+
+				&[hide] {
+					transition: height 0.2s ease, margin 0.2s ease;
+					height: 0;
+					margin: 0;
+					overflow: hidden;
+				}
+
+				& > div.collapse {
+					height: 0;
+					transition: height 0.6s ease, padding 0.6s ease;
+					overflow: hidden;
+					padding: 0 2em;
+				}
+
+				&[show] > div.collapse {
+					height: auto;
+					padding: 2em;
+				}
+			}
+
+			div.collapse-buttons {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+
+				width: 100%;
+				margin: 0;
+				padding: 0;
+			}
+
+			div.collapse {
+				background: #eeeeee;
+				position: relative;
+			}
+
+			button.collapse {
+				display: block;
+				width: calc(100% - 2.5em);
+				padding: 1em;
+				margin: 0;
+				border: none;
+				border-radius: 0;
+
+				background: #dddddd;
+				transition: all 0.2s ease;
+
+				&:before {
+					content: "Show/Hide ";
+				}
+
+				&:hover, &:focus {
+					background: #999999;
+					cursor: pointer;
+					outline: none;
+				}
+
+				&:active {
+					background: #666666;
+				}
+			}
+
+			button.close {
+				display: block;
+				width: 0.5em;
+				padding: 1em;
+				margin: 0;
+				border: none;
+				border-radius: 0;
+
+				background: #dddddd;
+				transition: all 0.2s ease;
+
+				&:before {
+					content: "X";
+				}
+
+				&:hover, &:focus {
+					background: #999999;
+					cursor: pointer;
+					outline: none;
+				}
+
+				&:active {
+					background: #666666;
+				}
+			}
+
+			textarea.data,
+			input.data {
+				position: absolute;
+				right: 2em;
+				left: 10em;
+				resize: none;
+			}
+
+			input.search {
+				border: none;
+				border-radius: 0;
+				padding: 0.5em;
+				margin: 0;
+				font-size: 1em;
+				width: calc(100% - 2.2em);
+				background: #dddddd;
+				transition: all 0.2s ease;
+
+				&:hover,
+				&:focus {
+					background: #c0c0c0;
+					outline: none;
+				}
+			}
+
+		</style>
+	</head>
+	<body style="display: relative;">
+		<div class="search-container">
+			<input type="text" class="search" id="search_bar" placeholder="Search here...">
+		</div>
+		<div class="collapse-container"></div>
+		<input type="file" id="file_upload" name="files" accept="text/javascript" size="30" style="position: absolute; left: 1em; bottom: 1em; font-size: 2em; border: none; border-radius: 0; padding: 0.4em; font-family: cursive;">
+		<button onclick="Download ();" style="position: absolute; right: 1em; bottom: 1em; font-size: 2em; border: none; border-radius: 0; padding: 0.4em; font-family: cursive;">Save File</button>
+	</body>
+</html>
