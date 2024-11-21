@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Review Database</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="text/javascript">
+
+			function SetObject (arr) {
+				var obj = {
+					items: [],
+					contains: function (elm) { return this.items.includes (elm); },
+					add: function (elm) { if (!this.items.includes (elm)) this.items.push (elm); },
+					remove: function (elm) { if (this.items.includes (elm)) this.items.splice (this.items.indexOf (elm), 1); }
+				};
+
+				for (var item of arr)
+					obj.add (item);
+
+				return obj;
+			}
+			
+			var LoadedData = { searchentries: [] };
+
+			var file_re = /({[\w\W\n\r]+});/m;
+
+			async function HandleFile (e) {
+				// Flush current data
+				if (LoadedData.searchentries.length > 0)
+					LoadedData.searchentries = [];
+
+				/*for (var elm of collapseContainer.children)
+					collapseContainer.removeChild (elm);*/
+
+				// Load file data
+				var files = e.target.files;
+				var file = files [0];
+
+				var txt = await file.text ();
+				console.log ("Loaded text!");
+				var json_txt = file_re.exec (txt) [1];
+
+				var _ = JSON.parse (json_txt);
+				LoadedData.searchentries = _.searchentries;
+				console.log (LoadedData);
+			}
+
+			function GetData (data_type = null) {
+				switch (data_type) {
+					case "title":
+					case "key":
+					case "description":
+					case "link":
+						return LoadedData.searchentries.map ((elm) => elm [data_type]);
+						break;
+
+					case "tags":
+						var tagSet = SetObject (LoadedData.searchentries.map ((elm) => elm.tags).reduce((a,b) => a.concat (b), []));
+						return tagSet.items;
+						break;
+
+					case null:
+						var arr = ["title", "key", "description", "link"]
+						var obj = {
+							tags: SetObject (LoadedData.searchentries.map ((elm) => elm.tags).reduce((a,b) => a.concat (b), [])).items
+						};
+
+						for (var prop of arr)
+							obj [prop] = LoadedData.searchentries.map ((elm) => elm [prop]);
+
+						return obj;
+						break;
+
+					default:
+						console.log ("'" + data_type + "'", "is not a known data type.");
+						break;
+				}
+			}
+
+			window.onload = (evt) => {
+				document.querySelector ("input#file_upload").addEventListener ("change", HandleFile);
+				// document.querySelector ("input#search_bar").addEventListener ("input", Search);
+			}
+
+			function Download (txt) {
+				var elm = document.createElement ("a");
+				elm.setAttribute ("href", "data:text/javascript;charset=utf-8," + encodeURIComponent (txt));
+				elm.setAttribute ("download", "data.js");
+				elm.style.display = 'none';
+
+				document.body.appendChild (elm);
+				elm.click ();
+				document.body.removeChild (elm);
+			}
+
+			function Dump (txt) {
+				txt = txt.replaceAll ("\t", "&#9;");
+				txt = txt.replaceAll ("\n", "<br />");
+
+				console.log (txt);
+
+				document.getElementById ("dump").innerHTML = txt;
+			}
+
+		</script>
+	</head>
+	<body>
+		<input type="file" id="file_upload" name="files" accept="text/javascript" size="30" style="font-size: 1em; border: none; border-radius: 0; padding: 0.4em; font-family: serif;"><br />
+		<button onclick="Download (JSON.stringify (GetData (), null, '\t'));">Download Data</button>
+		<button onclick="Dump (JSON.stringify (GetData (), null, '\t'));">Show Data</button>
+		<button onclick="Dump (JSON.stringify (GetData ('tags'), null, '\t'));">Show Tags</button><br /><br />
+		<pre id="dump"></pre>
+	</body>
+</html>
