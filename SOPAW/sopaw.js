@@ -23,9 +23,7 @@ if (document.currentScript.hasAttribute ("title")) {
   let title_txt = document.currentScript.getAttribute ("title");
   let _title = document.createElement ("h1");
   _title.innerHTML = title_txt;
-  let __b = document.querySelector ("body");
-
-  __b.appendChild (_title);
+  document.appendChild (_title);
 }
 
 let _scriptElm = document.createElement ("script");
