@@ -8,58 +8,58 @@ var _ = {
 			"link": "https://sites.google.com/view/paganreference/holidays/wheel-of-the-year"
 		},
 		{
-			"title": "Samhain",
-			"key": "samhain halloween all hallows eve",
-			"description": "One of the eight sabbats of the wheel of the year, celebrating the beginning of winter, the third harvest, and venoration of ancestors.",
-			"tags": [ "Wheel-of-the-Year", "Sabbat", "Quarter-Day" ],
+			"title": "Beginning of Winter",
+			"key": "samhain halloween all hallows eve beginning of winter start of winter",
+			"description": "Commonly called Samhain, this is one of the eight sabbats of the year celebrating the third harvest and venoration of ancestors.",
+			"tags": [ "Wheel-of-the-Year", "Sabbat", "Quarter-Day", "Season-Beginning" ],
 			"link": "https://sites.google.com/view/paganreference/holidays/sabbats/samhain"
 		},
 		{
-			"title": "Yule",
-			"key": "yule christmas",
-			"description": "One of the eight sabbats of the wheel of the year, celebrating the winter solstice and survival against the hardships and pains of the cold.",
+			"title": "Winter Solstice",
+			"key": "yule christmas winter solstice",
+			"description": "Commonly called Yule, this is one of the eight sabbats of the year celebrating survival against the hardships and pains of the cold.",
 			"tags": [ "Wheel-of-the-Year", "Sabbat", "Solstice" ],
 			"link": "https://sites.google.com/view/paganreference/holidays/sabbats/yule"
 		},
 		{
-			"title": "Imbolc",
-			"key": "imbolc groundhog day",
-			"description": "One of the eight sabbats of the wheel of the year, celebrating the beginning of spring and thus the shedding of the cold.",
-			"tags": [ "Wheel-of-the-Year", "Sabbat", "Quarter-Day" ],
+			"title": "Beginning of Spring",
+			"key": "imbolc groundhog day beginning of spring start of spring",
+			"description": "Commonlu called Imbolc, this is one of the eight sabbats of the year celebrating the shedding of winter's cold for spring.",
+			"tags": [ "Wheel-of-the-Year", "Sabbat", "Quarter-Day", "Season-Beginning" ],
 			"link": "https://sites.google.com/view/paganreference/holidays/sabbats/imbolc"
 		},
 		{
-			"title": "Ostara",
-			"key": "ostara eostara easter",
-			"description": "One of the eight sabbats of the wheel of the year, celebrating the spring equinox and the newfound growth therein.",
+			"title": "Spring Equinox",
+			"key": "ostara eostara easter spring equinox",
+			"description": "Commonly called Ostara, this is one of the eight sabbats of the year celebrating the newfound growth of spring.",
 			"tags": [ "Wheel-of-the-Year", "Sabbat", "Equinox" ],
 			"link": "https://sites.google.com/view/paganreference/holidays/sabbats/ostara"
 		},
 		{
-			"title": "Beltane",
-			"key": "beltane beltain",
-			"description": "One of the eight sabbats of the wheel of the year, celebrating the beginning of summer.",
-			"tags": [ "Wheel-of-the-Year", "Sabbat", "Quarter-Day" ],
+			"title": "Beginning of Summer",
+			"key": "beltane beltain beginning of summer start of summer",
+			"description": "Commonly called Beltane, this is one of the eight sabbats of the year celebrating the warmth of the upcoming summer.",
+			"tags": [ "Wheel-of-the-Year", "Sabbat", "Quarter-Day", "Season-Beginning" ],
 			"link": "https://sites.google.com/view/paganreference/holidays/sabbats/beltane"
 		},
 		{
-			"title": "Litha",
-			"key": "litha",
-			"description": "One of the eight sabbats of the wheel of the year, celebrating the summer solstice and thus the peak of sunlight.",
+			"title": "Summer solstice",
+			"key": "litha midsummer midsommar",
+			"description": "Commonly called Litha, this is one of the eight sabbats of the year celebrating the peak of the summer sun on the season's longest day.",
 			"tags": [ "Wheel-of-the-Year", "Sabbat", "Solstice" ],
 			"link": "https://sites.google.com/view/paganreference/holidays/sabbats/litha"
 		},
 		{
-			"title": "Lughnasadh",
-			"key": "lughnasadh lunasa lammas",
-			"description": "One of the eight sabbats of the wheel of the year, celebrating the beginning of fall and the first harvest.",
-			"tags": [ "Wheel-of-the-Year", "Sabbat", "Quarter-Day" ],
+			"title": "Beginning of Autumn",
+			"key": "lughnasadh lunasa lammas beginning of autumn start of autumn beginning of fall start of fall",
+			"description": "Commonly called Lughnasadh, this is one of the eight sabbats of the year celebrating the first harvest of corn and grains.",
+			"tags": [ "Wheel-of-the-Year", "Sabbat", "Quarter-Day", "Season-Beginning" ],
 			"link": "https://sites.google.com/view/paganreference/holidays/sabbats/lughnasadh"
 		},
 		{
-			"title": "Mabon",
-			"key": "mabon",
-			"description": "One of the eight sabbats of the wheel of the year, celebrating the autumnal equinox and the second harvest.",
+			"title": "Autumnal Equinox",
+			"key": "mabon autumnal equinox fall equinox",
+			"description": "Commonly called Mabom, this is one of the eight sabbats of the year celebrating the second harvest of fruits and vegetables.",
 			"tags": [ "Wheel-of-the-Year", "Sabbat", "Equinox" ],
 			"link": "https://sites.google.com/view/paganreference/holidays/sabbats/mabon"
 		}
