@@ -5,7 +5,7 @@ var _ = {
 			"key": "wheel of the year",
 			"description": "One view of the year as a wheel because of it's cyclical nature, with the 8 sabbats acting as the spokes of the wheel.",
 			"tags": [ "Wheel-of-the-Year" ],
-			"link": "https://sites.google.com/view/paganreference/holidays/wheel-of-the-year"
+			"link": "https://sites.google.com/view/paganreference/holidays-and-observances/wheel-of-the-year"
 		},
 		{
 			"title": "Beginning of Winter",
