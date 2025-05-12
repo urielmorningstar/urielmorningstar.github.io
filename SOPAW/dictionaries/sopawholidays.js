@@ -59,7 +59,7 @@ var _ = {
 		{
 			"title": "Autumnal Equinox",
 			"key": "mabon autumnal equinox fall equinox",
-			"description": "Commonly called Mabom, this is one of the eight sabbats of the year celebrating the second harvest of fruits and vegetables.",
+			"description": "Commonly called Mabon, this is one of the eight sabbats of the year celebrating the second harvest of fruits and vegetables.",
 			"tags": [ "Wheel-of-the-Year", "Sabbat", "Equinox" ],
 			"link": "https://sites.google.com/view/paganreference/holidays/sabbats/mabon"
 		}
