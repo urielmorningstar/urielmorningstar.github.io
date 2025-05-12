@@ -19,6 +19,15 @@ let _metaElm = document.createElement ("meta");
 _metaElm.setAttribute ("charset", "UTF-8");
 __h.appendChild (_metaElm);
 
+if (document.currentScript.hasAttribute ("title")) {
+  let title_txt = document.currentScript.getAttribute ("title");
+  let _title = document.createElement ("h1");
+  _title.innerHTML = title_txt;
+  let __b = document.querySelector ("body");
+
+  __b.appendChild (_title);
+}
+
 let _scriptElm = document.createElement ("script");
 _scriptElm.setAttribute ("src", "https://urielmorningstar.github.io/SOPAW/sopawcore.js");
 _scriptElm.setAttribute ("charset", "UTF-8");
